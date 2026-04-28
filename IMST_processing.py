@@ -14,50 +14,49 @@ from scipy.integrate import trapezoid
 wk_session_num = 4
 
 #Add participants and groups (these will be added to the summary file results). Make sure that the participant ID match the participant folder names exactly. 
-GROUP_LOOKUP = {
-    "MRS_01": "1",
-    "MRS_02": "1",
-    "MRS_03": "1",
-    "MRS_04": "1",
-    "MRS_05": "DO",
-    "MRS_07": "2",
-    "MRS_08": "2",
-    "MRS_09": "2",
-    "MRS_11": "1",
-    "MRS_12": "WD",
-    "MRS_13": "2",
-    "MRS_14": "1",
-    "MRS_15": "WD",
-    "MRS_17": "2",
-    "MRS_18": "1",
-    "MRS_19": "1",
-    "MRS_20": "DO",
-    "MRS_22": "1",
-    "MRS_24": "2",
-    "MRS_25": "2",
-    "MRS_26": "2",
-    "MRS_27": "2",
-    "MRS_28": "2",
-    "MRS_29": "1",
-    "MRS_30": "WD",
-    "MRS_31": "1",
-    "MRS_32": "2",
-    "MRS_33": "2",
+GROUP_LOOKUP = { # Example formatting
+    "MRS_01": "IMT",
+    "MRS_02": "Control",
+    "MRS_03": "IMT",
+    "MRS_04": "Control",
+    "MRS_05": "IMT",
+    "MRS_06": "Control",
+    "MRS_07": "IMT",
+    "MRS_08": "Control",
+    "MRS_09": "IMT",
+    "MRS_10": "Control",
+    "MRS_11": "IMT",
+    "MRS_12": "Control",
+    "MRS_13": "IMT",
+    "MRS_14": "Control",
+    "MRS_15": "IMT",
+    "MRS_16": "Control",
+    "MRS_17": "IMT",
+    "MRS_18": "Control",
+    "MRS_20": "IMT",
+    "MRS_21": "Control",
+    "MRS_22": "IMT",
+    "MRS_23": "Control",
+    "MRS_24": "IMT",
+    "MRS_25": "Control",
+    "MRS_26": "IMT",
+    "MRS_27": "Control",
+    "MRS_28": "IMT",
+    # Add the rest of your study participants. Alternatively, replace this section to read the particpant ID and group code from a .csv or excel document. 
 }
 
 # ==================== Begin calculations ====================
 
 # These constants set the airflow calculation values used throughout the script.
 DIAMETER1 = 0.002  # 2 mm orifice for the smaller secondary hole
-DIAMETER2 = 0      # Larger hole not used for inspiration
-CD = 0.84          # Discharge coefficient for air at room temperature through a ~1.66 mm hole
-RHO = 1.089416     # Air density at ambient conditions (kg/m^3)
+DIAMETER2 = 0      # Larger hole not used for inspiration - add value here if another hole is drilled into mouthpiece.
+CD = 0.84          # Discharge coefficient for air at room temperature through a ~1.7 mm hole. It was the closest published data with a reference that I could find. 
+RHO = 1.089416     # Air density at ambient conditions (kg/m^3).
 AREA_ORIFICE = (np.pi * (DIAMETER1 / 2) ** 2) + (np.pi * (DIAMETER2 / 2) ** 2)
 
 # Denote how you want the summary file saved
 SUMMARY_PATH = Path("IMT_summary.xlsx")
 DATA_DIR = Path("data")
-
 
 def extract_trailing_number(filename):
     # Pull the session number off the end of a filename like MRS_07_12.
